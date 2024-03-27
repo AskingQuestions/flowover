@@ -1,0 +1,7 @@
+@import '@fontsource/fira-mono';
+
+body,
+html {
+	background-color: #131313;
+	overflow: hidden;
+}

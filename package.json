@@ -1,0 +1,38 @@
+{
+  "name": "flowover",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "mitosis": "mitosis build",
+    "build": "npm run mitosis",
+    "start": "watch 'npm run mitosis' ./src",
+    "example:svelte": "cd example/example-svelte && npm run dev",
+    "example:react": "cd example/example-react && npm run dev",
+    "example:vue": "cd example/example-vue && npm run dev",
+    "example:solid": "cd example/example-solid && npm run dev",
+    "example:all": "cd example/example-all && npm run dev",
+    "install:svelte": "cd example/example-svelte && npm i",
+    "install:react": "cd example/example-react && npm i",
+    "install:vue": "cd example/example-vue && npm i",
+    "install:solid": "cd example/example-solid && npm i",
+    "examples": "concurrently 'npm:example:*'",
+    "examples:install": "concurrently 'npm:install:*'"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@builder.io/mitosis": "^0.1.7",
+    "@builder.io/mitosis-cli": "^0.1.7"
+  },
+  "devDependencies": {
+    "@builder.io/eslint-plugin-mitosis": "^0.0.15",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.57.0",
+    "prettier": "^2.8.8",
+    "typescript": "^5.4.3",
+    "watch": "^1.0.2"
+  }
+}
