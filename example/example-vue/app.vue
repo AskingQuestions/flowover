@@ -1,3 +1,7 @@
+<script setup>
+import { FlowSlot } from '@flowover/vue';
+</script>
+
 <template>
   <main
     style="
@@ -8,6 +12,8 @@
     "
   >
     <img src="/logo.svg" alt="logo" style="max-width: 48px" />
+
+    <FlowSlot> </FlowSlot>
   </main>
 </template>
 

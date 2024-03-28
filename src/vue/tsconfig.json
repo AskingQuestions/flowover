@@ -1,0 +1,9 @@
+{
+  "files": ["./src/index.ts"],
+  // "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true
+  }
+}

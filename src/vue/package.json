@@ -1,0 +1,38 @@
+{
+  "name": "@flowover/vue",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/flowover.umd.cjs",
+  "module": "./dist/flowover.js",
+  "exports": {
+    ".": {
+      "import": "./dist/flowover.js",
+      "require": "./dist/flowover.umd.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && vue-tsc --emitDeclarationOnly",
+    "types": "vue-tsc ",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.2",
+    "@types/node": "^20.11.28",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/tsconfig": "^0.5.1",
+    "npm-run-all2": "^6.1.2",
+    "typescript": "~5.4.0",
+    "vite": "^5.1.6",
+    "vue-tsc": "^2.0.6"
+  }
+}

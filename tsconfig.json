@@ -5,8 +5,7 @@
     "jsx": "preserve",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "jsxImportSource": "@builder.io/mitosis"
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src"]
 }

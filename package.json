@@ -17,7 +17,11 @@
     "install:vue": "cd example/example-vue && npm i",
     "install:solid": "cd example/example-solid && npm i",
     "examples": "concurrently 'npm:example:*'",
-    "examples:install": "concurrently 'npm:install:*'"
+    "examples:install": "concurrently 'npm:install:*'",
+    "link:svelte": "cd src/svelte && npm link && cd ../../example/example-svelte && npm link @flowover/svelte",
+    "link:react": "cd src/react && npm link && cd ../../example/example-react && npm link @flowover/react",
+    "link:vue": "cd src/vue && npm link && cd ../../example/example-vue && npm link @flowover/vue",
+    "packages:link": "concurrently 'npm:link:*'"
   },
   "author": "",
   "license": "MIT",
