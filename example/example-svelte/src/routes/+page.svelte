@@ -1,6 +1,7 @@
 <script>
 	import FlowItem from '../../../../src/svelte/src/lib/FlowItem.svelte';
 	import FlowSlot from '../../../../src/svelte/src/lib/FlowSlot.svelte';
+	import Dropdown from './Dropdown.svelte';
 
 	// import { FlowSlot, FlowItem } from '@flowover/svelte';
 
@@ -30,26 +31,33 @@
 				</FlowItem>
 			</div>
 			<div class="flex-1 flex flex-col space-y-4">
+				<textarea class="resize"></textarea>
+				<div>
+					<Dropdown></Dropdown>
+				</div>
 				<FlowSlot
+					autosize="y"
 					on:click={() => {
 						idx = 0;
 					}}
 					name="footer0"
-					class="bg-black p-4 rounded-xl min-h-[100px] resize"
+					class="bg-black p-4 rounded-xl resize"
 				></FlowSlot>
 				<FlowSlot
+					autosize="none"
 					on:click={() => {
 						idx = 1;
 					}}
 					name="footer1"
-					class="bg-black p-4 rounded-xl min-h-[100px]"
+					class="bg-black p-4 rounded-xl "
 				></FlowSlot>
 				<FlowSlot
+					autosize="y"
 					on:click={() => {
 						idx = 2;
 					}}
 					name="footer2"
-					class="bg-black p-4 rounded-xl min-h-[100px]"
+					class="bg-black p-4 rounded-xl "
 				></FlowSlot>
 			</div>
 		</div>

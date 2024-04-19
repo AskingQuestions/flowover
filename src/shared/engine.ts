@@ -99,14 +99,14 @@ function frameLoop() {
     if (
       !(ghost as HTMLElement & { $flowoverMarked: boolean }).$flowoverMarked
     ) {
-      ghost.style.transition = '0ms';
+      ghost.style.transition = '250ms';
       ghost.style.width = '0';
       ghost.style.height = '0';
       ghost.removeAttribute('data-flowover-ghost');
       ghost.id = '';
       setTimeout(() => {
         ghost.remove();
-      }, 0);
+      }, 250);
       flow.ghosts.splice(i, 1);
     }
   }
@@ -154,6 +154,9 @@ export function getFlowover(): FlowoverGlobalState {
 				height: var(--flowover-item-height) !important;
 				will-change: transform;
 			}
+      [data-flowover-slot-dirty] {
+        background-color: pink !important;
+      }
 		`;
       document.body.appendChild(style);
     }
@@ -181,7 +184,7 @@ function initFlowItem(item: Item) {
     transitionDuration: 0,
     transitionTimer: 0,
     transitionDelay: 0,
-    transitionTimingFunction: bezier(0.26, 1.72, 0.27, 0.39), //(t: number) => t, // Linear by default
+    transitionTimingFunction: bezier(0, 0.7, 0, 0.7), //(t: number) => t, // Linear by default
 
     currentTransform: {
       x: currentRect.x,
@@ -295,7 +298,7 @@ function getSlotTransform(item: Item, slot: Slot) {
   // Measure the item transform and set the ghost transform to match
   // const itemTransform = getItemNaturalTransform(item);
 
-  const autosize = (item.dataset.flowoverAutosize ?? 'y') as
+  const autosize = (slot.dataset.flowoverAutosize ?? 'none') as
     | 'x'
     | 'y'
     | 'both'
@@ -437,8 +440,13 @@ function updateFlowItem(item: Item, deltaTime: number) {
     }
   }
 
-  if (context.currentSlot && context.currentSlot.dataset.flowoverSlotDirty) {
-    context.targetTransform = getSlotTransform(item, context.currentSlot);
+  const alwaysMeasure = true;
+  if (
+    alwaysMeasure ||
+    (context.currentSlot && context.currentSlot.dataset.flowoverSlotDirty)
+  ) {
+    if (context.currentSlot)
+      context.targetTransform = getSlotTransform(item, context.currentSlot);
   }
 
   // Update current transform
@@ -457,14 +465,27 @@ function updateFlowItem(item: Item, deltaTime: number) {
   );
   const easedT = context.transitionTimingFunction(t);
 
-  const natural = getItemNaturalTransform(item);
-
   const x = lerp(context.fromTransform.x, context.targetTransform.x, easedT);
   const y = lerp(context.fromTransform.y, context.targetTransform.y, easedT);
-  const width = lerp(context.fromTransform.width, natural.width, easedT);
-  const height = lerp(context.fromTransform.height, natural.height, easedT);
-  context.targetTransform.width = natural.width;
-  context.targetTransform.height = natural.height;
+  let toWidth = context.targetTransform.width;
+  let toHeight = context.targetTransform.height;
+
+  if (context.currentSlot) {
+    const autosize = (context.currentSlot.dataset.flowoverAutosize ??
+      'none') as 'x' | 'y' | 'both' | 'none';
+    if (autosize != 'none') {
+      const natural = getItemNaturalTransform(item);
+      if (autosize === 'x' || autosize === 'both') {
+        toWidth = natural.width;
+      }
+      if (autosize === 'y' || autosize === 'both') {
+        toHeight = natural.height;
+      }
+    }
+  }
+
+  const width = lerp(context.fromTransform.width, toWidth, easedT);
+  const height = lerp(context.fromTransform.height, toHeight, easedT);
 
   context.currentTransform.x = x;
   context.currentTransform.y = y;
@@ -489,7 +510,7 @@ function updateFlowItem(item: Item, deltaTime: number) {
     const ghost = getItemSlotGhost(item, context.currentSlot);
     (ghost as HTMLElement & { $flowoverMarked: boolean }).$flowoverMarked =
       true;
-    const autosize = (item.dataset.flowoverAutosize ?? 'y') as
+    const autosize = (context.currentSlot.dataset.flowoverAutosize ?? 'y') as
       | 'x'
       | 'y'
       | 'both'
